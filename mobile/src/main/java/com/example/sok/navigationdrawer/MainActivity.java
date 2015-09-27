@@ -10,6 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.example.sok.navigationdrawer.fragment.AllGroupsFragment;
+import com.example.sok.navigationdrawer.fragment.CurrentGroupFragment;
+import com.example.sok.navigationdrawer.fragment.PreferencesFragment;
+import com.example.sok.navigationdrawer.fragment.TabsFragment;
+
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -21,19 +26,14 @@ public class MainActivity extends AppCompatActivity {
 
         initToolbar();
         initNavigationView();
+        replaceFragment(new AllGroupsFragment());
     }
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                return false;
-            }
-        });
-
         toolbar.inflateMenu(R.menu.main);
+        setSupportActionBar(toolbar);
     }
 
     private void initNavigationView() {
@@ -48,21 +48,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 drawerLayout.closeDrawers();
-                Fragment fragment = new Fragment1();
+                Fragment fragment = null;
                 switch (menuItem.getItemId()) {
-                    case 0:
+                    case R.id.all_groups_item:
+                        fragment = new AllGroupsFragment();
                         break;
-                    case 1:
+                    case R.id.current_group_item:
+                        fragment = new CurrentGroupFragment();
                         break;
-                    case 2:
+                    case R.id.tabs_item:
+                        fragment = new TabsFragment();
                         break;
-                    case 3:
+                    case R.id.preferences_item:
+                        fragment = new PreferencesFragment();
                         break;
                 }
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+                replaceFragment(fragment);
                 return true;
             }
         });
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.main_container, fragment).commit();
     }
 }
