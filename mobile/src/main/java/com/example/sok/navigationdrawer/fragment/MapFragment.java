@@ -1,39 +1,23 @@
 package com.example.sok.navigationdrawer.fragment;
 
-import android.graphics.BitmapFactory;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.sok.navigationdrawer.R;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-
-public class MapFragment extends SupportMapFragment implements
+public class MapFragment extends Fragment/*SupportMapFragment implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnMapLongClickListener,
         GoogleMap.OnMapClickListener,
-        GoogleMap.OnMarkerClickListener {
+        GoogleMap.OnMarkerClickListener */{
 
     private GoogleApiClient mGoogleApiClient;
     private Location mCurrentLocation;
@@ -49,7 +33,7 @@ public class MapFragment extends SupportMapFragment implements
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
         return rootView;
     }
-
+/*
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -214,5 +198,5 @@ public class MapFragment extends SupportMapFragment implements
     public void onDestroy() {
         super.onDestroy();
         removeListeners();
-    }
+    }*/
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="default_selector" format="reference"/>
+    <attr name="primary_text_color" format="reference"/>
+    <attr name="secondary_text_color" format="reference"/>
+    <attr name="hint_text_color" format="reference"/>
+
+</resources>

@@ -1,8 +1,15 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="default_selector">@drawable/default_item_selector</item>
+        <item name="primary_text_color">@color/primary_text_dark</item>
+        <item name="secondary_text_color">@color/secondary_text_dark</item>
+        <item name="hint_text_color">@color/hint_text_dark</item>
     </style>
 
+    <style name="AppTheme.Default.Light" parent="AppTheme">
+    </style>
 </resources>

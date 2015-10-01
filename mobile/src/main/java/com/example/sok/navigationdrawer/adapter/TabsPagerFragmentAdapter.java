@@ -26,6 +26,18 @@ public class TabsPagerFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return "Info";
+            case 1:
+                return "Map";
+            default:
+                return super.getPageTitle(position);
+        }
+    }
+
+    @Override
     public int getCount() {
         return 2;
     }
