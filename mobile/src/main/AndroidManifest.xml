@@ -8,8 +8,18 @@
         android:required="true"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="22"/>
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="22"/>
     <!--
      Creates a custom permission so only this app can receive its messages.
      NOTE: the permission *must* be called PACKAGE.permission.C2D_MESSAGE,
@@ -19,14 +29,10 @@
         android:name="com.example.sok.navigationdrawer.permission.C2D_MESSAGE"
         android:protectionLevel="signature"/>
     <uses-permission android:name="com.example.sok.navigationdrawer.permission.C2D_MESSAGE"/>
-
     <!-- This app has permission to register and receive data message. -->
     <uses-permission
         android:name="com.google.android.c2dm.permission.RECEIVE"/>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"

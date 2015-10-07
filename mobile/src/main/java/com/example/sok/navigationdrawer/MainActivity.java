@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
+                menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
                 Fragment fragment = null;
                 switch (menuItem.getItemId()) {
