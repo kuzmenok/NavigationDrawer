@@ -42,7 +42,6 @@ public class MapFragment extends SupportMapFragment implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         GoogleMap.OnInfoWindowClickListener,
-        GoogleMap.OnMapLoadedCallback,
         GoogleMap.OnMapLongClickListener,
         GoogleMap.OnMapClickListener,
         GoogleMap.OnMarkerClickListener {
@@ -93,8 +92,13 @@ public class MapFragment extends SupportMapFragment implements
                     mMap = map;
                 }
                 initListeners();
+                getTeamInfo();
             }
         });
+    }
+
+    public void getTeamInfo() {
+        //TODO запрос на сервер для получения инфы о команде
     }
 
     @Override
@@ -151,11 +155,6 @@ public class MapFragment extends SupportMapFragment implements
     public void onConnected(Bundle bundle) {
         mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         initCamera(mCurrentLocation);
-    }
-
-    @Override
-    public void onMapLoaded() {
-        //TODO
     }
 
     @Override

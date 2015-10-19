@@ -30,4 +30,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:8.1.0'
     compile 'com.google.android.gms:play-services-location:8.1.0'
     compile 'net.grandcentrix.tray:tray:0.9.2'
+    compile 'com.github.castorflex.smoothprogressbar:library-circular:1.0.1'
+    compile 'com.afollestad:material-dialogs:0.7.9.1'
 }

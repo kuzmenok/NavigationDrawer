@@ -1,7 +1,9 @@
 package com.example.sok.navigationdrawer.fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,22 +20,24 @@ import android.widget.Filter;
 import com.example.sok.navigationdrawer.R;
 import com.example.sok.navigationdrawer.adapter.GroupsFilterAdapter;
 import com.example.sok.navigationdrawer.data.Group;
+import com.example.sok.navigationdrawer.dialog.GroupDialog;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class AllGroupsFragment extends Fragment implements Filter.FilterListener {
+public class AllGroupsFragment extends Fragment implements Filter.FilterListener, GroupDialog.GroupDialogCallback {
     private GroupsFilterAdapter adapter;
     private RecyclerView recyclerView;
     private View noResultView;
+    private FloatingActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_all_groups, container, false);
         setHasOptionsMenu(true);
+        init(rootView);
 
-        noResultView = rootView.findViewById(R.id.no_results_view);
+        return rootView;
+    }
 
+    private void init(View rootView) {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         adapter = new GroupsFilterAdapter();
@@ -41,21 +45,32 @@ public class AllGroupsFragment extends Fragment implements Filter.FilterListener
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        return rootView;
+        fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showGroupDialog();
+            }
+        });
+        noResultView = rootView.findViewById(R.id.no_results_view);
+    }
+
+    private void showGroupDialog() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        GroupDialog dialog = new GroupDialog();
+        dialog.setCallback(this);
+        dialog.show(ft, dialog.getTag());
     }
 
     @Override
     public void onResume() {
         super.onResume();
         //test data
-        List<Group> list = new ArrayList<>();
-        list.add(new Group("one"));
-        list.add(new Group("two"));
-        list.add(new Group("three"));
-        list.add(new Group("four"));
-        list.add(new Group("five"));
-        adapter.clear();
-        adapter.addAll(list);
+        adapter.add(new Group("one"));
+        adapter.add(new Group("two"));
+        adapter.add(new Group("three"));
+        adapter.add(new Group("four"));
+        adapter.add(new Group("five"));
     }
 
     @Override
@@ -80,5 +95,10 @@ public class AllGroupsFragment extends Fragment implements Filter.FilterListener
     @Override
     public void onFilterComplete(int count) {
         noResultView.setVisibility(count > 0 ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void onGroupCreated(Group newGroup) {
+        adapter.add(newGroup);
     }
 }

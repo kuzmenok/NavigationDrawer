@@ -32,6 +32,12 @@ public abstract class AbstractFilterBindableAdapter<T, VH extends RecyclerView.V
         notifyItemRangeInserted(getHeadersCount(), data.size());
     }
 
+    public void add(T item) {
+        objects.add(item);
+        originalValues.add(item);
+        notifyItemInserted(objects.size() - 1 + getHeadersCount());
+    }
+
     public void addShowed(List<? extends T> data) {
         objects.clear();
         objects.addAll(data);

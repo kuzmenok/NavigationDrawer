@@ -12,4 +12,8 @@
     <string name="search_member_label">label</string>
     <string name="no_results">No results</string>
     <string name="action_search_member">Search member</string>
+    <string name="create">Create</string>
+    <string name="new_group">New group</string>
+    <string name="name_hint">Name</string>
+    <string name="error_empty_name">Empty name</string>
 </resources>
