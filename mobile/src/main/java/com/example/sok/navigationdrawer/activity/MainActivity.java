@@ -1,4 +1,4 @@
-package com.example.sok.navigationdrawer;
+package com.example.sok.navigationdrawer.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.example.sok.navigationdrawer.R;
 import com.example.sok.navigationdrawer.fragment.AllGroupsFragment;
 import com.example.sok.navigationdrawer.fragment.CurrentGroupFragment;
 import com.example.sok.navigationdrawer.fragment.PreferencesFragment;
@@ -31,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
-        toolbar.inflateMenu(R.menu.main);
         setSupportActionBar(toolbar);
     }
 

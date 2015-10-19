@@ -44,4 +44,9 @@ public class WearableListItemLayout extends LinearLayout implements WearableList
         mAuthor.setAlpha(mFadedTextAlpha);
         mText.setAlpha(mFadedTextAlpha);
     }
+
+    @Override
+    public boolean hasOverlappingRendering() {
+        return false;
+    }
 }

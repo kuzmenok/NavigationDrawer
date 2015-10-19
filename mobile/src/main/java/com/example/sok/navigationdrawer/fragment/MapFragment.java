@@ -143,6 +143,7 @@ public class MapFragment extends SupportMapFragment implements
             mapSettings.setRotateGesturesEnabled(true);
             mapSettings.setZoomGesturesEnabled(true);
             mapSettings.setScrollGesturesEnabled(true);
+            mapSettings.setIndoorLevelPickerEnabled(false);
         }
     }
 
