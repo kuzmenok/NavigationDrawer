@@ -4,10 +4,10 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "group")
-public class Group{
+@DatabaseTable(tableName = "users")
+public class User{
 
-    public final static String GROUP_FIELD_NAME = "name";
+    public final static String USER_FIELD_NAME = "name";
 
     @DatabaseField(generatedId = true)
     private int Id;
@@ -15,11 +15,11 @@ public class Group{
     @DatabaseField(canBeNull = false, dataType = DataType.STRING)
     private String name;
 
-    public Group() {
+    public User() {
 
     }
 
-    public Group(String name) {
+    public User(String name) {
         this.name = name;
     }
 

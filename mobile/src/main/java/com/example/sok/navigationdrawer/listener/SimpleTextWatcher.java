@@ -1,4 +1,4 @@
-package com.example.sok.navigationdrawer;
+package com.example.sok.navigationdrawer.listener;
 
 import android.text.Editable;
 import android.text.TextWatcher;

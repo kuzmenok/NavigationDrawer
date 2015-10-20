@@ -16,8 +16,8 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.sok.navigationdrawer.R;
-import com.example.sok.navigationdrawer.SimpleTextWatcher;
 import com.example.sok.navigationdrawer.data.Group;
+import com.example.sok.navigationdrawer.listener.SimpleTextWatcher;
 
 public class GroupDialog extends DialogFragment {
     private GroupDialogCallback mCallback;

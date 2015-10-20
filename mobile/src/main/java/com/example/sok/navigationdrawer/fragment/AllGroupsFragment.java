@@ -20,7 +20,11 @@ import android.widget.Filter;
 import com.example.sok.navigationdrawer.R;
 import com.example.sok.navigationdrawer.adapter.GroupsFilterAdapter;
 import com.example.sok.navigationdrawer.data.Group;
+import com.example.sok.navigationdrawer.database.DatabaseHelper;
+import com.example.sok.navigationdrawer.database.HelperFactory;
 import com.example.sok.navigationdrawer.dialog.GroupDialog;
+
+import java.sql.SQLException;
 
 public class AllGroupsFragment extends Fragment implements Filter.FilterListener, GroupDialog.GroupDialogCallback {
     private GroupsFilterAdapter adapter;
@@ -65,12 +69,21 @@ public class AllGroupsFragment extends Fragment implements Filter.FilterListener
     @Override
     public void onResume() {
         super.onResume();
+        TESTfillAdapter();
+    }
+
+    private void TESTfillAdapter() {
         //test data
-        adapter.add(new Group("one"));
-        adapter.add(new Group("two"));
-        adapter.add(new Group("three"));
-        adapter.add(new Group("four"));
-        adapter.add(new Group("five"));
+        try {
+            long a = System.currentTimeMillis();
+            DatabaseHelper helper = HelperFactory.getHelper();
+            for (int i = 0; i < 20; i++) {
+                Group group = new Group("group " + i);
+                helper.getGroupDAO().create(group);
+                adapter.add(group);
+            }
+        } catch (SQLException ignored) {
+        }
     }
 
     @Override
