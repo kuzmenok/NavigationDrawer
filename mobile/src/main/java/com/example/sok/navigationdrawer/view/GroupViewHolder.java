@@ -8,7 +8,7 @@ import com.example.sok.navigationdrawer.R;
 import com.example.sok.navigationdrawer.data.Group;
 
 public class GroupViewHolder extends RecyclerView.ViewHolder {
-    TextView name;
+    private final TextView name;
 
     public GroupViewHolder(View itemView) {
         super(itemView);

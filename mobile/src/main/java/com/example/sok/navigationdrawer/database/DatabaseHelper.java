@@ -19,7 +19,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
     //имя файла базы данных который будет храниться в /data/data/APPNAME/DATABASE_NAME.db
-    private static final String DATABASE_NAME ="myappname.db";
+    private static final String DATABASE_NAME = "myappname.db";
 
     //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
     private static final int DATABASE_VERSION = 1;
@@ -40,6 +40,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, User.class);
         } catch (SQLException e){
             Log.e(TAG, "error creating DB " + DATABASE_NAME);
+            throw new RuntimeException(e);
         }
     }
 
@@ -53,6 +54,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             onCreate(db, connectionSource);
         } catch (SQLException e){
             Log.e(TAG,"error upgrading db "+DATABASE_NAME+"from ver "+oldVer);
+            throw new RuntimeException(e);
         }
     }
 

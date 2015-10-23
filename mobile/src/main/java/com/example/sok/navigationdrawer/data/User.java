@@ -6,17 +6,15 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "users")
 public class User{
-
     public final static String USER_FIELD_NAME = "name";
 
     @DatabaseField(generatedId = true)
     private int Id;
-
     @DatabaseField(canBeNull = false, dataType = DataType.STRING)
     private String name;
 
     public User() {
-
+        // ORMLite needs a no-arg constructor
     }
 
     public User(String name) {

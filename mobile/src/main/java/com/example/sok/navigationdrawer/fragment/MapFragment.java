@@ -97,7 +97,7 @@ public class MapFragment extends SupportMapFragment implements
         });
     }
 
-    public void getTeamInfo() {
+    private void getTeamInfo() {
         //TODO запрос на сервер для получения инфы о команде
     }
 
@@ -231,15 +231,20 @@ public class MapFragment extends SupportMapFragment implements
         Bundle args = new Bundle();
         args.putInt(DIALOG_ERROR, errorCode);
         dialogFragment.setArguments(args);
+        dialogFragment.setCallback(new ErrorDialogFragment.ErrorDialogCallback() {
+            @Override
+            public void onDialogDismissed() {
+                mResolvingError = false;
+            }
+        });
         dialogFragment.show(getActivity().getSupportFragmentManager(), "errordialog");
     }
 
-    public void onDialogDismissed() {
-        mResolvingError = false;
-    }
+    public static class ErrorDialogFragment extends DialogFragment {
+        private ErrorDialogCallback mCallback;
 
-    public class ErrorDialogFragment extends DialogFragment {
-        public ErrorDialogFragment() {
+        public interface ErrorDialogCallback {
+            void onDialogDismissed();
         }
 
         @NonNull
@@ -251,7 +256,11 @@ public class MapFragment extends SupportMapFragment implements
 
         @Override
         public void onDismiss(DialogInterface dialog) {
-            onDialogDismissed();
+            mCallback.onDialogDismissed();
+        }
+
+        public void setCallback(ErrorDialogCallback callback) {
+            this.mCallback = callback;
         }
     }
 

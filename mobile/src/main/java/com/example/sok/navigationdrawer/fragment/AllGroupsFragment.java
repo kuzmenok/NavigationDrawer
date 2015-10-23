@@ -75,7 +75,6 @@ public class AllGroupsFragment extends Fragment implements Filter.FilterListener
     private void TESTfillAdapter() {
         //test data
         try {
-            long a = System.currentTimeMillis();
             DatabaseHelper helper = HelperFactory.getHelper();
             for (int i = 0; i < 20; i++) {
                 Group group = new Group("group " + i);

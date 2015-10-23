@@ -23,7 +23,6 @@ public class GroupDAO extends BaseDaoImpl<Group, Integer> {
         QueryBuilder<Group, Integer> queryBuilder = queryBuilder();
         queryBuilder.where().eq(Group.GROUP_FIELD_NAME, name);
         PreparedQuery<Group> preparedQuery = queryBuilder.prepare();
-        List<Group> groups = query(preparedQuery);
-        return groups;
+        return query(preparedQuery);
     }
 }

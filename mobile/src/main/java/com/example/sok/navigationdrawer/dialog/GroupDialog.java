@@ -63,6 +63,7 @@ public class GroupDialog extends DialogFragment {
                 .build();
 
         View customView = dialog.getCustomView();
+        if (customView == null) return dialog;
         etName = (EditText) customView.findViewById(R.id.et_name);
         tlName = (TextInputLayout) customView.findViewById(R.id.tl_name);
         etName.addTextChangedListener(new SimpleTextWatcher() {

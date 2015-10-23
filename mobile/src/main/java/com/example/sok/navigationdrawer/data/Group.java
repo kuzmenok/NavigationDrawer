@@ -6,17 +6,15 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "group")
 public class Group{
-
     public final static String GROUP_FIELD_NAME = "name";
 
     @DatabaseField(generatedId = true)
     private int Id;
-
     @DatabaseField(canBeNull = false, dataType = DataType.STRING)
     private String name;
 
     public Group() {
-
+        // ORMLite needs a no-arg constructor
     }
 
     public Group(String name) {

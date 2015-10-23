@@ -15,7 +15,7 @@ public abstract class AbstractFilterBindableAdapter<T, VH extends RecyclerView.V
     private ArrayFilter filter;
     private OnFilterObjectCallback onFilterObjectCallback;
 
-    protected AbstractFilterBindableAdapter() {
+    AbstractFilterBindableAdapter() {
         objects = new ArrayList<>();
         originalValues = new ArrayList<>();
     }
