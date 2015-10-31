@@ -3,6 +3,7 @@ package com.example.sok.navigationdrawer.api;
 import android.support.annotation.NonNull;
 
 import com.example.sok.navigationdrawer.api.request.GroupsRequest;
+import com.example.sok.navigationdrawer.api.request.GeolocationRequest;
 import com.example.sok.navigationdrawer.app.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,6 +44,11 @@ public class ApiFactory {
     @NonNull
     public static GroupsRequest getGroupsRequest() {
         return getRetrofit().create(GroupsRequest.class);
+    }
+
+    @NonNull
+    public static GeolocationRequest getGeolocationRequest() {
+        return getRetrofit().create(GeolocationRequest.class);
     }
 
     @NonNull

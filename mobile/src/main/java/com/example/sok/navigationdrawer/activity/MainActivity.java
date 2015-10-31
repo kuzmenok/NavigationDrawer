@@ -1,5 +1,6 @@
 package com.example.sok.navigationdrawer.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,12 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.sok.navigationdrawer.R;
+import com.example.sok.navigationdrawer.app.Constants;
 import com.example.sok.navigationdrawer.fragment.AllGroupsFragment;
 import com.example.sok.navigationdrawer.fragment.CurrentGroupFragment;
+import com.example.sok.navigationdrawer.fragment.InfoFragment;
 import com.example.sok.navigationdrawer.fragment.PreferencesFragment;
 import com.example.sok.navigationdrawer.fragment.TabsFragment;
+import com.example.sok.navigationdrawer.service.LocationService;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements InfoFragment.OnChangeTripStateListener, Constants{
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
 
@@ -72,5 +76,22 @@ public class MainActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_container, fragment).commit();
+    }
+
+    private void startLocationService() {
+        startService(new Intent(this, LocationService.class));
+    }
+
+    private void stopLocationService() {
+        stopService(new Intent(this, LocationService.class));
+    }
+
+    @Override
+    public void onChangeTripState(int currentState) {
+        if (currentState == TRIP_STATE_RUNNING) {
+            startLocationService();
+        } else {
+            stopLocationService();
+        }
     }
 }

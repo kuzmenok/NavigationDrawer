@@ -17,6 +17,9 @@
     <string name="name_hint">Name</string>
     <string name="error_empty_name">Empty name</string>
 
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+
     <string name="sign_out_button_name">Sign out</string>
     <string name="revoke_access_button_name">Revoke</string>
 
