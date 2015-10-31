@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dip">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="20dip">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -42,50 +41,4 @@
         android:layout_marginBottom="20dip"
         android:text="@string/status_signed_out" />
 
-
-    <LinearLayout
-        android:id="@+id/layout_server_auth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/request_server_auth_code" />
-
-            <CheckBox
-                android:id="@+id/request_auth_code_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_has_token"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="invisible"
-            tools:visibility="visible">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mock_server_has_token" />
-
-            <CheckBox
-                android:id="@+id/has_token_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true" />
-
-        </LinearLayout>
-
-    </LinearLayout>
 </LinearLayout>

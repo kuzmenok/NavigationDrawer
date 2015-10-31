@@ -58,7 +58,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    //синглтон для GoalDAO
     public GroupDAO getGroupDAO() throws SQLException{
         if(groupDao == null){
             groupDao = new GroupDAO(getConnectionSource(), Group.class);
@@ -66,7 +65,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return groupDao;
     }
 
-    //синглтон для GoalDAO
     public UserDAO getUserDAO() throws SQLException{
         if(userDao == null){
             userDao = new UserDAO(getConnectionSource(), User.class);

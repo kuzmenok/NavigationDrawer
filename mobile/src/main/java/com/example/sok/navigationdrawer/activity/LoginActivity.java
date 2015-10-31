@@ -9,13 +9,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sok.navigationdrawer.R;
-import com.example.sok.navigationdrawer.listener.ServerAuthHandler;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -29,25 +26,12 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Demonstrates Google Sign-In, retrieval of user's profile information, and
  * offline server authorization.
  */
 public class LoginActivity extends AppCompatActivity implements
-        ConnectionCallbacks, OnConnectionFailedListener, View.OnClickListener,
-        CheckBox.OnCheckedChangeListener {
+        ConnectionCallbacks, OnConnectionFailedListener, View.OnClickListener {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
 
@@ -72,14 +56,6 @@ public class LoginActivity extends AppCompatActivity implements
     // Should we resolve sign-in errors?
     private boolean mShouldResolve = false;
 
-    // Separate object to handle the logic for Server Auth Code exchange, which is optional
-    private ServerAuthHandler mServerAuthHandler;
-
-    // Used to determine if we should ask for a server auth code when connecting the
-    // GoogleApiClient.  False by default so that this sample can be used without configuring
-    // a WEB_CLIENT_ID and SERVER_BASE_URL.
-    private boolean mRequestServerAuthCode = false;
-
     private TextView mStatus;
 
     @Override
@@ -94,16 +70,11 @@ public class LoginActivity extends AppCompatActivity implements
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.revoke_access_button).setOnClickListener(this);
 
-        // CheckBox listeners
-        ((CheckBox) findViewById(R.id.request_auth_code_checkbox)).setOnCheckedChangeListener(this);
-        ((CheckBox) findViewById(R.id.has_token_checkbox)).setOnCheckedChangeListener(this);
-
         if (savedInstanceState != null) {
             mIsResolving = savedInstanceState.getBoolean(KEY_IS_RESOLVING);
             mShouldResolve = savedInstanceState.getBoolean(KEY_SHOULD_RESOLVE);
         }
 
-        mServerAuthHandler = new ServerAuthHandler(this);
 
         mGoogleApiClient = buildGoogleApiClient();
     }
@@ -120,13 +91,7 @@ public class LoginActivity extends AppCompatActivity implements
                 .addScope(new Scope(Scopes.PROFILE))
                 .addScope(new Scope(Scopes.PLUS_LOGIN))
                 .addScope(new Scope(Scopes.PLUS_ME))
-                .addScope(new Scope(Scopes.EMAIL))
-                .requestServerAuthCode(SERVER_CLIENT_ID, mServerAuthHandler);
-
-        if (mRequestServerAuthCode) {
-            mServerAuthHandler.checkServerAuthConfiguration(WEB_CLIENT_ID);
-            builder = builder.requestServerAuthCode(WEB_CLIENT_ID, mServerAuthHandler);
-        }
+                .addScope(new Scope(Scopes.EMAIL));
 
         return builder.build();
     }
@@ -209,25 +174,6 @@ public class LoginActivity extends AppCompatActivity implements
                     );
                     break;
             }
-        }
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()) {
-            case R.id.request_auth_code_checkbox:
-                mRequestServerAuthCode = isChecked;
-                buildGoogleApiClient();
-
-                if (mRequestServerAuthCode) {
-                    findViewById(R.id.layout_has_token).setVisibility(View.VISIBLE);
-                } else {
-                    findViewById(R.id.layout_has_token).setVisibility(View.INVISIBLE);
-                }
-                break;
-            case R.id.has_token_checkbox:
-                mServerAuthHandler.setServerHasToken(true);
-                break;
         }
     }
 
@@ -356,12 +302,6 @@ public class LoginActivity extends AppCompatActivity implements
         findViewById(R.id.sign_in_button).setEnabled(!isSignedIn);
         findViewById(R.id.sign_out_button).setEnabled(isSignedIn);
         findViewById(R.id.revoke_access_button).setEnabled(isSignedIn);
-
-        if (isSignedIn) {
-            findViewById(R.id.layout_server_auth).setVisibility(View.GONE);
-        } else {
-            findViewById(R.id.layout_server_auth).setVisibility(View.VISIBLE);
-        }
     }
 
     private class GetIdTokenTask extends AsyncTask<Void, String, String> {
@@ -379,10 +319,10 @@ public class LoginActivity extends AppCompatActivity implements
 
             String scopes = "audience:server:client_id:" + SERVER_CLIENT_ID;
             try {
-                String code = GoogleAuthUtil.getToken(getApplicationContext(), account, scopes);
+                String idToken = GoogleAuthUtil.getToken(getApplicationContext(), account, scopes);
                 // Successfully retrieved ID Token
-                boolean sendSuccessfully = sendCodeToServer(code);
-                return sendSuccessfully ? code : null;
+                boolean sendSuccessfully = sendCodeToServer(idToken);
+                return sendSuccessfully ? idToken : null;
             } catch (Exception e) {
                 Log.e(TAG, "Error retrieving ID token.", e);
                 return null;
@@ -397,31 +337,22 @@ public class LoginActivity extends AppCompatActivity implements
             } else {
                 // There was some error getting the ID Token
                 // ...
-                Toast.makeText(getApplicationContext(), "ERROR (LoginActivity.GetIdTokenTask.onPostExecute)", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "ERROR: can't get(or send to server) ID token", Toast.LENGTH_LONG).show();
             }
         }
     }
 
-    private boolean sendCodeToServer(String code) {
-        //TODO заменить на retrofit
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost("https://www.projectB.com/auth/google_oauth2/callback"); // TODO set proper url
-
-        try {
-            List<BasicNameValuePair> nameValuePairs = new ArrayList<>(1);
-            nameValuePairs.add(new BasicNameValuePair("idToken", code));
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-            HttpResponse response = httpClient.execute(httpPost);
-            int statusCode = response.getStatusLine().getStatusCode();
-            final String responseBody = EntityUtils.toString(response.getEntity());
-            //TODO if response SUCCESS - return true, if ERROR - return false;
-            Log.i(TAG, "Signed in as: " + responseBody);
-            return true;
-        } catch (IOException e) {
-            //TODO как-нибудь обработать
-            Log.e(TAG, "Error sending ID token to backend.", e);
-            return false;
-        }
+    private boolean sendCodeToServer(String idToken) {
+//        try {
+//            // TODO: 31.10.2015 send token
+//
+//            //TODO if response SUCCESS - return true, if ERROR - return false;
+//            return true;
+//        } catch (IOException e) {
+//            //TODO check networking status; do exponential backoff
+//            Log.e(TAG, "Error sending ID token to backend.", e);
+//            return false;
+//        }
+        return false;
     }
 }

@@ -128,6 +128,7 @@ public class MapFragment extends SupportMapFragment implements
     }
 
     private void initCamera(Location location) {
+        if (location == null) return;
         final CameraPosition position = CameraPosition.builder()
                 .target(new LatLng(location.getLatitude(), location.getLongitude()))
                 .zoom(16f)
